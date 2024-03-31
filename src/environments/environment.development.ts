@@ -1,3 +1,3 @@
 export const environment = {
-  BASE_URL: 'http://www.weatherforecast.somee.com/api/v1/weather',
+  BASE_URL: 'https://www.weatherforecast.somee.com/api/v1/weather',
 };
