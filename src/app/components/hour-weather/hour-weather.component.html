@@ -1,0 +1,25 @@
+<div class="container-fluid px-0 mb-3">
+  <div class="row g-3">
+    @for (item of hourWeather; track $index) {
+    <div class="col-xl-2 col-lg-4 col-sm-6 col-xs-12">
+      <div class="card bg-success text-white">
+        <div class="card-body">
+          <div class="card-title fw-bold">
+            {{ item.time.getHours().toString() + "h00" }}
+          </div>
+          <img
+            src="https:{{ item.condition.icon }}"
+            alt=""
+            width="60"
+            height="60"
+            class="mb-2"
+          />
+          <div class="card-text">Temp: {{ item.temp_C }}&deg;C</div>
+          <div class="card-text">Wind: {{ item.wind_Kph }} K/h</div>
+          <div class="card-text">Humidity: {{ item.humidity }}%</div>
+        </div>
+      </div>
+    </div>
+    }
+  </div>
+</div>

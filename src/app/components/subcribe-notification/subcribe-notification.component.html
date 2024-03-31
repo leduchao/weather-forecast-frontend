@@ -1,0 +1,43 @@
+@if(isUnsubscribe) {
+<div class="alert alert-warning alert-dismissible fade show" role="alert">
+  Unsubscribe email successfully!
+  <button
+    type="button"
+    class="btn-close"
+    data-bs-dismiss="alert"
+    aria-label="Close"
+  ></button>
+</div>
+}
+
+<div class="d-flex justify-content-sm-center align-items-center mb-4">
+  <div class="w-md-100 w-lg-50">
+    <p class="fw-bold fs-5">Subcribe to receive daily weather notifications</p>
+    <form class="d-flex" [formGroup]="form" (ngSubmit)="subcribeMail()">
+      <input
+        class="form-control me-3"
+        type="email"
+        placeholder="Email"
+        formControlName="input"
+      />
+      <button class="btn btn-outline-primary" type="submit">Subcribe</button>
+    </form>
+  </div>
+</div>
+
+@if (isSendedMail) {
+<div class="d-flex justify-content-sm-center align-items-center mb-4">
+  <div class="w-md-100 w-lg-50">
+    <p class="fw-medium fs-6">Confirmation Code</p>
+    <form class="d-flex" [formGroup]="confirmCode" (ngSubmit)="confirmEmail()">
+      <input
+        class="form-control me-3"
+        type="text"
+        placeholder="Code"
+        formControlName="input"
+      />
+      <button class="btn btn-outline-success" type="submit">Confirm</button>
+    </form>
+  </div>
+</div>
+}

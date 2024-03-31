@@ -1,0 +1,28 @@
+.line-with-text {
+  position: relative;
+  /* display: inline-block; */
+}
+
+.line-with-text::before,
+.line-with-text::after {
+  content: "";
+  position: absolute;
+  top: 60%;
+  width: 46%; /* Điều chỉnh chiều dài của đường kẻ */
+  height: 0.5px; /* Điều chỉnh độ dày của đường kẻ */
+  background-color: gray; /* Màu của đường kẻ */
+}
+
+.line-with-text::before {
+  left: 0;
+}
+
+.line-with-text::after {
+  right: 0;
+}
+
+.line-with-text span {
+  position: relative;
+  z-index: 1;
+  padding: 0 48%; /* Điều chỉnh khoảng cách giữa chữ và đường kẻ */
+}
