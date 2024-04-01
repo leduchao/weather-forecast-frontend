@@ -50,7 +50,9 @@ export class SubcribeNotificationComponent {
               this.isUnsubscribe = this.unsubscribeEmail(email ?? 'none-email');
             }
           } else {
-            alert(data.body);
+            alert(
+              data.body + ' Please check your email to get confirmation code!'
+            );
             this.isSendedMail = true;
 
             console.log(data);

@@ -10,7 +10,9 @@
 </div>
 }
 
-<div class="d-flex justify-content-sm-center align-items-center mb-4">
+<div
+  class="d-lg-flex justify-content-sm-center justify-content-lg-between align-items-center mb-4"
+>
   <div class="w-md-100 w-lg-50">
     <p class="fw-bold fs-5">Subcribe to receive daily weather notifications</p>
     <form class="d-flex" [formGroup]="form" (ngSubmit)="subcribeMail()">
@@ -27,12 +29,10 @@
       form)
     </p>
   </div>
-</div>
-
-@if (isSendedMail) {
-<div class="d-flex justify-content-sm-center align-items-center mb-4">
+  @if (isSendedMail) {
+  <!-- <div class="d-flex justify-content-sm-center align-items-center mb-4"> -->
   <div class="w-md-100 w-lg-50">
-    <p class="fw-medium fs-6">Confirmation Code</p>
+    <p class="fw-medium fs-5">Confirmation Code</p>
     <form class="d-flex" [formGroup]="confirmCode" (ngSubmit)="confirmEmail()">
       <input
         class="form-control me-3"
@@ -43,5 +43,6 @@
       <button class="btn btn-outline-success" type="submit">Confirm</button>
     </form>
   </div>
+  <!-- </div> -->
+  }
 </div>
-}
