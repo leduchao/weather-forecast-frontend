@@ -26,3 +26,11 @@
   z-index: 1;
   padding: 0 48%; /* Điều chỉnh khoảng cách giữa chữ và đường kẻ */
 }
+
+@media (min-width: 576px) {
+  .modal-dialog {
+    max-width: 1000px;
+    margin-right: auto;
+    margin-left: auto;
+  }
+}

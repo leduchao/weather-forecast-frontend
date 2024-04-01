@@ -1,0 +1,30 @@
+<div class="container-fluid px-0 mb-3">
+  @if (historyWeather.length == 0) {
+  <h5>
+    Weather history is empty because you haven't searched for any cities yet!
+  </h5>
+  }
+  <div class="row g-3">
+    @for (item of historyWeather; track $index) {
+    <div class="col-xl-3 col-lg-4 col-sm-6 col-xs-12">
+      <div class="card bg-success text-white">
+        <div class="card-body">
+          <div class="card-title fw-bold">
+            {{ item.location.name }}
+          </div>
+          <img
+            src="https:{{ item.current.condition.icon }}"
+            alt=""
+            width="60"
+            height="60"
+            class="mb-2"
+          />
+          <div class="card-text">Temp: {{ item.current.temp_C }}&deg;C</div>
+          <div class="card-text">Wind: {{ item.current.wind_Kph }} K/h</div>
+          <div class="card-text">Humidity: {{ item.current.humidity }}%</div>
+        </div>
+      </div>
+    </div>
+    }
+  </div>
+</div>

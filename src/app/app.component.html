@@ -4,6 +4,8 @@
 >
   Weather Dashboard
 </header>
+
+@if (isLoaded) {
 <div class="container-fluid px-5">
   <div class="row">
     <div class="col-md-12 col-lg-4">
@@ -51,18 +53,110 @@
   <hr />
 
   <div class="d-flex justify-content-end">
-    <button class="btn btn-outline-success mb-0" (click)="showTodayWeather()">
-      @if(!showWeather){ Show history weather at avery hour } @else { Hide
-      history weather at avery hour }
+    <!-- <button class="btn btn-dark me-2">Show history search</button> -->
+    <button
+      type="button"
+      class="btn btn-dark me-2"
+      data-bs-toggle="modal"
+      data-bs-target="#historyWeather"
+    >
+      Show history search
+    </button>
+
+    <button
+      type="button"
+      class="btn btn-primary"
+      data-bs-toggle="modal"
+      data-bs-target="#hourWeather"
+    >
+      Show weather at avery hour at {{ weather?.location?.name }}
     </button>
   </div>
 
-  @if(showWeather) {
+  <!-- History weather Modal -->
+  <div
+    class="modal fade"
+    id="historyWeather"
+    tabindex="-1"
+    aria-labelledby="historyWeatherModal"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog w-75">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="historyWeatherModal">
+            History Weather
+          </h1>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <app-history-weather
+            [historyWeather]="historyWeathers"
+          ></app-history-weather>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+          >
+            Close
+          </button>
+          <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Hour weather Modal -->
+  <div
+    class="modal fade"
+    id="hourWeather"
+    tabindex="-1"
+    aria-labelledby="hourWeatherModal"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog w-75">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="hourWeatherModal">
+            Weather at every hour
+          </h1>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <app-hour-weather [hourWeather]="hourWeather"></app-hour-weather>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+          >
+            Close
+          </button>
+          <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- @if(showWeather) {
   <p class="fw-bold fs-4">
     Today weather at every hour at {{ weather?.location?.name }}
   </p>
   <app-hour-weather [hourWeather]="hourWeather"></app-hour-weather>
-  }
+  } -->
 
   <hr />
 
@@ -73,3 +167,8 @@
 
   <app-subcribe-notification></app-subcribe-notification>
 </div>
+} @else {
+<div class="container-fluid px-5">
+  <h2 class="">Loading...</h2>
+</div>
+}

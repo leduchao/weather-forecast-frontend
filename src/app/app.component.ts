@@ -1,5 +1,5 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, JsonPipe } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import { CurentWeatherComponent } from './components/curent-weather/curent-weather.component';
 import { WeatherForecastComponent } from './components/weather-forecast/weather-forecast.component';
@@ -17,6 +17,7 @@ import { Forecast } from './interfaces/forecast';
 import { GeolocationService } from './services/geolocation.service';
 import { HourInfor } from './interfaces/hour-infor';
 import { HourWeatherComponent } from './components/hour-weather/hour-weather.component';
+import { HistoryWeatherComponent } from './components/history-weather/history-weather.component';
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -28,6 +29,7 @@ import { HourWeatherComponent } from './components/hour-weather/hour-weather.com
     SubcribeNotificationComponent,
     ReactiveFormsModule,
     HourWeatherComponent,
+    HistoryWeatherComponent,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
@@ -37,6 +39,7 @@ export class AppComponent implements OnInit {
   date: string | undefined;
   forecast: Forecast | null = null;
   hourWeather: HourInfor[] = [];
+  historyWeathers: Weather[] = [];
 
   form = new FormGroup({
     input: new FormControl('', Validators.required),
@@ -44,15 +47,21 @@ export class AppComponent implements OnInit {
 
   title = 'weather-forecast';
 
-  city = 'ho chi minh';
+  isLoaded = false;
+  // showWeather = false;
 
-  showWeather = false;
+  private searchedWeathers: Weather[] = [];
 
   private geolocationService = inject(GeolocationService);
   private weatherService = inject(WeatherService);
 
   ngOnInit(): void {
     this.getCurrentWeatherByLatLon();
+
+    sessionStorage.setItem(
+      'searchedWeathers',
+      JSON.stringify(this.searchedWeathers)
+    );
   }
 
   getCurrentWeatherByLatLon() {
@@ -92,7 +101,7 @@ export class AppComponent implements OnInit {
               element.time = new Date(element.time);
             });
 
-            // console.log(this.hourWeather);
+            this.isLoaded = true;
           },
           error: (err) => {
             console.log(err);
@@ -140,6 +149,10 @@ export class AppComponent implements OnInit {
             this.hourWeather.forEach((element) => {
               element.time = new Date(element.time);
             });
+
+            this.addTosession(weatherResp);
+
+            this.historyWeathers = this.getSearchedWeathers();
           },
           error: (err) => {
             console.log(err);
@@ -151,7 +164,40 @@ export class AppComponent implements OnInit {
     }
   }
 
-  showTodayWeather() {
-    this.showWeather = !this.showWeather;
+  // showTodayWeather() {
+  //   this.showWeather = !this.showWeather;
+  // }
+
+  private addTosession(searchWeather: Weather) {
+    // add weather to array
+    this.searchedWeathers = this.getSearchedWeathers();
+
+    // find the city in session
+    const city = this.searchedWeathers.find(
+      (element) =>
+        element.location.name.toLowerCase().trim().replace(' ', '') ===
+        searchWeather.location.name.toLowerCase().trim().replace(' ', '')
+    );
+
+    // city not exist
+    if (!city) {
+      this.searchedWeathers.push(searchWeather);
+
+      // add array to session storage
+      sessionStorage.setItem(
+        'searchedWeathers',
+        JSON.stringify(this.searchedWeathers)
+      );
+    }
+  }
+
+  private getSearchedWeathers(): Weather[] {
+    const searchedWeathers: Weather[] = JSON.parse(
+      sessionStorage.getItem('searchedWeathers') ?? ''
+    );
+
+    if (!searchedWeathers) return [];
+
+    return searchedWeathers;
   }
 }
